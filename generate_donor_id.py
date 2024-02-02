@@ -4,7 +4,7 @@ from prefect import flow
 from prefect.blocks.system import JSON
 
 
-@flow
+@flow(log_prints=True)
 def generate_donor_id(
     number_of_ids: int = 1
 ):
