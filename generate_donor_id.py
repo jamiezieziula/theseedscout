@@ -2,6 +2,7 @@ import random
 
 from prefect import flow
 from prefect.blocks.system import JSON
+from prefect.blocks.notifications import SlackWebhook
 
 
 @flow(log_prints=True)
@@ -28,8 +29,15 @@ def generate_donor_id(
             complete = True
     
     print(f"The new Donor ID(s) are: {new_donor_ids}")
+
+    # Combined existing and new donor ids
     merged_list = donor_ids + new_donor_ids
 
+    # Send Slack notification
+    slack_webhook_block = SlackWebhook.load("new-donor-id-notification")
+    slack_webhook_block.notify(f"The new Donor ID(s) are: {new_donor_ids}")
+
+    # Save to JSON block
     donors = JSON(value=merged_list)
     donors.save(name="donor-ids", overwrite=True)
 
