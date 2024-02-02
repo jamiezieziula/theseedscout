@@ -11,21 +11,27 @@ def generate_donor_id(
     # Load existing donor IDs
     donor_ids = JSON.load("donor-ids").value
 
-    complete = False
+    new_donor_ids = []
 
     # Generate Donor ID and ensure it does not already exist
-    while complete == False:
-        donor_id = random.randint(1000, 9999)
+    for i in range(number_of_ids):
+        complete = False
 
-        if donor_id in donor_ids:
-            continue
+        while complete == False:
+            donor_id = random.randint(1000, 9999)
 
-        print(f"The new Donor ID is: {donor_id}")
-        donor_ids.append(donor_id)
+            if donor_id in donor_ids:
+                continue
 
-        donors = JSON(value=donor_ids)
-        donors.save(name="donor-ids", overwrite=True)
-        complete = True
+            new_donor_ids.append(donor_id)
+
+            complete = True
+    
+    print(f"The new Donor ID(s) are: {new_donor_ids}")
+    merged_list = donor_ids + new_donor_ids
+
+    donors = JSON(value=merged_list)
+    donors.save(name="donor-ids", overwrite=True)
 
 
 if __name__ == "__main__":
