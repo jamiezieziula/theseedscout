@@ -16,7 +16,7 @@ def generate_donor_id():
         if donor_id in donor_ids:
             continue
 
-        print(donor_id)
+        print(f"The new Donor ID is: {donor_id}")
         donor_ids.append(donor_id)
 
         donors = JSON(value=donor_ids)
