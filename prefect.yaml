@@ -1,0 +1,15 @@
+name: theseedscout
+prefect-version: 2.13.2
+
+pull:
+  - prefect.deployments.steps.git_clone:
+      repository: https://github.com/PrefectHQ/flows
+      branch: main
+      access_token: "{{ prefect.blocks.secret.theseedscout-contents-ro-pat }}"
+
+deployments:
+  - name: Generate Donor ID
+    description: Generate 1 or more donor IDs
+    entrypoint: generate_donor_id.py:generate_donor_id
+    work_pool:
+      name: seedscout
