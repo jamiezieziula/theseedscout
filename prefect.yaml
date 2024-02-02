@@ -3,7 +3,7 @@ prefect-version: 2.13.2
 
 pull:
   - prefect.deployments.steps.git_clone:
-      repository: https://github.com/PrefectHQ/flows
+      repository: https://github.com/jamiezieziula/theseedscout
       branch: main
       access_token: "{{ prefect.blocks.secret.theseedscout-contents-ro-pat }}"
 
